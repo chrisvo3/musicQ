@@ -16,11 +16,21 @@ class Pages {
 	 * Index
 	 */
 	public function index() {
-		echo 'Home Page';
+		// echo 'Home Page';
+		$data = array(
+			'title' => 'Home Page',
+			'name'  => 'Dary',
+		);
+
+		$this->view( 'pages/index', $data );
 	}
 
+	/**
+	 * 
+	 */
 	public function about() {
-		echo 'About';
+		// echo 'About';
+		$this->view( 'pages/about' );
 	}
 
 }
