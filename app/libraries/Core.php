@@ -27,7 +27,7 @@ class Core {
 	 * The current controller and method will change if the URl changes.
 	 * @var $params
 	 */
-	protected $params = [];
+	protected $params = array();
 
 	/**
 	 * Constructor
@@ -50,7 +50,21 @@ class Core {
 		require_once '../app/controllers' . $this->curr_controller . '.php';
 
 		// instantiate it.
-		$this->curr_controller = new $this->curr_controller; 
+		$this->curr_controller = new $this->curr_controller;
+
+		// check for the second part of the url.
+		if ( isset( $url[1] ) ) {
+			if ( method_exists( $this->curr_controller, $url[1] ) ) {
+				$this->curr_method = $url[1];
+				unset( $url[1] );
+			}
+		}
+
+		// get parameters.
+		$this->params = $url ? array_values( $url ) : array();
+
+		// call a callback witha rray of params.
+		call_user_func_array( array( $this->curr_controller, $this->curr_method ), $this->params );
 	}
 
 	/**
