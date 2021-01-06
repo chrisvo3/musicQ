@@ -1,6 +1,6 @@
 <?php
 /**
- * Page 
+ * Page
  */
 
 class Pages {
@@ -18,20 +18,20 @@ class Pages {
 	 * Index
 	 */
 	public function index() {
-		// echo 'Home Page';
+		$users = $this->user_model->get_users();
+
 		$data = array(
 			'title' => 'Home Page',
-			'name'  => 'Dary',
+			'user'  => $users,
 		);
 
 		$this->view( 'pages/index', $data );
 	}
 
 	/**
-	 * 
+	 * About page
 	 */
 	public function about() {
-		// echo 'About';
 		$this->view( 'pages/about' );
 	}
 

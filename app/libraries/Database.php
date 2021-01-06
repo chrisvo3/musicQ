@@ -76,4 +76,65 @@ class Database {
 			echo esc_html( $this->error );
 		}
 	}
+
+	/**
+	 * Allows to write queries
+	 * $sql
+	 */
+	public function query( $sql ) {
+		// prepare() take one argument.
+		$this->statement = $this->db_handler->prepare( $sql );
+	}
+
+	/**
+	 * Bind param with value for type is equal to data type
+	 */
+	public function bind( $paremeter, $value, $type = null ) {
+		switch( is_null( $type ) ) {
+			case is_int( $value ):
+				$type = PDO::PARAM_INT;
+				break;
+			case is_bool( $value ):
+				$type = PDO::PARAM_BOOL;
+				break;
+			case is_null( $value ):
+				$type = PDO::PARAM_NULL;
+				break;
+			default:
+				$type = PDO::PARAM_STR;
+		}
+
+		$this->statement->bindValue( $parameter, $value, $type );
+	}
+
+	/**
+	 * Execute the prepared statement
+	 */
+	public function execute() {
+		return $this->statement->execute();
+	}
+
+	/**
+	 * Return an array
+	 */
+	public function result_set() {
+		$this->execute();
+		return $this->statement->fetchALL( PDO::FETCH_OBJ );
+	}
+
+	/**
+	 * Return a specific row as an object
+	 */
+	public function single() {
+		$this->execute();
+		return $this->statement->fetch( PDO::FETCH_OBJ );
+	}
+
+	/**
+	 * Get the row counts
+	 */
+	public function row_count() {
+		return $this->statement->rowCount();
+	}
+
 }
