@@ -10,7 +10,9 @@ class Pages {
 	 */
 	public function __construct() {
 		// echo 'Loaded';
-	}
+		// look for file called 'User'.
+		$this->user_model = $this->model( 'User' );
+	} 
 
 	/**
 	 * Index
